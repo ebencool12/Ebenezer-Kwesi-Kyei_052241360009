@@ -1,0 +1,21 @@
+{
+  "name": "fd-abrante3-spot-2",
+  "version": "1.0.0",
+  "description": "Daily Stock Keeper for FD ABRANTE3 SPOT 2",
+  "main": "index.html",
+  "scripts": {
+    "start": "./start.sh",
+    "stop": "./stop.sh",
+    "restart": "./stop.sh && ./start.sh"
+  },
+  "keywords": [
+    "stock-keeper",
+    "inventory",
+    "retail"
+  ],
+  "author": "FD ABRANTE3 SPOT 2",
+  "license": "ISC",
+  "dependencies": {
+    "@supabase/server": "^1.9.2"
+  }
+}

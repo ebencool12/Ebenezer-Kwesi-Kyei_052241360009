@@ -1,0 +1,9 @@
+.git
+data/
+scratch/
+__pycache__/
+.server.log
+.server.pid
+server.py
+start.sh
+stop.sh

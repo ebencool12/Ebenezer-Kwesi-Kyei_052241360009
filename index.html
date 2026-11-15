@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>FD ABRANTE3 SPOT 2 – Daily Stock Keeper</title>
+  <meta name="description"
+    content="Daily Stock Keeper for FD ABRANTE3 SPOT 2: record opening stock, stock added, stock sold, closing stock and total stock value for every item, every day." />
+  <meta name="theme-color" content="#07110e" />
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="icon" type="image/png" href="icons/favicon.png" />
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css?v=6.8" />
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.getRegistrations().then((regs) => {
+        for (const r of regs) r.unregister();
+      });
+    }
+    if ('caches' in window) {
+      caches.keys().then((keys) => keys.forEach((k) => caches.delete(k)));
+    }
+  </script>
+</head>
+
+<body>
+  <div class="bg-glow" aria-hidden="true"></div>
+
+  <!-- PIN lock screen -->
+  <div id="lock-screen" class="lock hidden" role="dialog" aria-modal="true" aria-labelledby="lock-title">
+    <div class="lock-card">
+      <img src="icons/icon-192.png" alt="" class="lock-logo" width="72" height="72" />
+      <h2 id="lock-title" class="lock-title">Enter PIN</h2>
+      <p class="lock-store" id="lock-store">FD ABRANTE3 SPOT 2</p>
+      <div class="pin-dots" id="pin-dots" aria-live="polite"></div>
+      <div class="keypad" id="keypad">
+        <button type="button" data-key="1">1</button><button type="button" data-key="2">2</button><button type="button"
+          data-key="3">3</button>
+        <button type="button" data-key="4">4</button><button type="button" data-key="5">5</button><button type="button"
+          data-key="6">6</button>
+        <button type="button" data-key="7">7</button><button type="button" data-key="8">8</button><button type="button"
+          data-key="9">9</button>
+        <button type="button" data-key="clear" class="kp-muted">Clear</button><button type="button"
+          data-key="0">0</button><button type="button" data-key="back" class="kp-muted"
+          aria-label="Delete digit">⌫</button>
+      </div>
+    </div>
+  </div>
+
+  <header class="topbar">
+    <a href="#/" class="brand" id="brand-link" aria-label="Go to today's sheet">
+      <img src="icons/icon-192.png" alt="" width="40" height="40" class="brand-logo" />
+      <span class="brand-text">
+        <span class="brand-name" id="brand-name">FD ABRANTE3 SPOT 2</span>
+        <span class="brand-sub">Daily Stock Keeper</span>
+      </span>
+    </a>
+    <nav class="nav" aria-label="Main">
+      <a href="#/" class="nav-link" id="nav-today" data-view="sheet">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M7 3v3M17 3v3M4 9h16M5 5h14a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Z" />
+        </svg>
+        <span>Today</span>
+      </a>
+      <a href="#/all" class="nav-link" id="nav-all" data-view="all">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M4 6h16M4 12h16M4 18h10" />
+        </svg>
+        <span>All Days</span>
+      </a>
+      <a href="#/settings" class="nav-link" id="nav-settings" data-view="settings">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" />
+          <path
+            d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1Z" />
+        </svg>
+        <span>Settings</span>
+      </a>
+    </nav>
+    <div class="topbar-right">
+      <button type="button" class="sync-pill" id="sync-status" data-state="local" title="Data is saved on this device">
+        <span class="sync-dot"></span><span class="sync-text">On this device</span>
+      </button>
+      <button type="button" class="icon-btn hidden" id="lock-now" aria-label="Lock app" title="Lock">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <rect x="5" y="11" width="14" height="10" rx="2" />
+          <path d="M8 11V7a4 4 0 0 1 8 0v4" />
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- ============ DAILY SHEET ============ -->
+    <section id="view-sheet" class="view" aria-labelledby="sheet-store">
+      <div class="sheet-head">
+        <button type="button" class="day-arrow" id="prev-day" aria-label="Previous day">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="m15 18-6-6 6-6" />
+          </svg>
+        </button>
+        <div class="sheet-title">
+          <h1 id="sheet-store" class="store-title">FD ABRANTE3 SPOT 2</h1>
+          <div class="date-row">
+            <label for="date-picker" class="date-label" id="sheet-date-label">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M7 3v3M17 3v3M4 9h16M5 5h14a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Z" />
+              </svg>
+              <span id="sheet-date">—</span>
+              <input type="date" id="date-picker" class="date-input" aria-label="Pick a date" />
+            </label>
+            <span class="badge" id="day-badge"></span>
+            <button type="button" class="chip hidden" id="go-today">Back to Today</button>
+          </div>
+        </div>
+        <button type="button" class="day-arrow" id="next-day" aria-label="Next day">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="m9 18 6-6-6-6" />
+          </svg>
+        </button>
+      </div>
+
+      <div id="later-banner" class="banner hidden" role="status"></div>
+
+      <div id="sheet-empty" class="empty-card hidden"></div>
+
+      <div id="sheet-card" class="card sheet-card hidden">
+        <div class="toolbar">
+          <button type="button" class="btn primary" id="add-item">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M12 5v14M5 12h14" />
+            </svg>Add Item
+          </button>
+          <button type="button" class="btn gold" id="carry-forward">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M5 12h14M13 6l6 6-6 6" />
+            </svg>Carry Forward
+          </button>
+          <button type="button" class="btn ghost" id="new-day">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M14 3H6a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8Z" />
+              <path d="M14 3v5h5M12 11v6M9 14h6" />
+            </svg>New Day
+          </button>
+          <button type="button" class="btn danger-ghost" id="delete-sheet" title="Delete this day's sheet (if mistakenly created or unused)">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6M10 11v6M14 11v6" />
+            </svg>Delete Sheet
+          </button>
+          <a href="#/all" class="btn ghost" id="view-all-stock">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M4 6h16M4 12h16M4 18h10" />
+            </svg>View All Stock
+          </a>
+        </div>
+
+        <div class="table-wrap" id="table-wrap">
+          <table class="stock-table" id="sheet-table">
+            <colgroup>
+              <col class="col-no" />
+              <col class="col-item" />
+              <col class="col-opening" />
+              <col class="col-receipt" />
+              <col class="col-total" />
+              <col class="col-balance" />
+              <col class="col-sold" />
+              <col class="col-price" />
+              <col class="col-amt-ghc" />
+              <col class="col-amt-ghp" />
+              <col class="col-del" />
+            </colgroup>
+            <thead>
+              <tr>
+                <th class="c-no sticky-no" rowspan="2" scope="col">No.</th>
+                <th class="c-item sticky-item" rowspan="2" scope="col">Item</th>
+                <th scope="col" rowspan="2" class="num" title="Opening Stock from start of day">Opening Stock</th>
+                <th scope="col" rowspan="2" class="num" title="Stock received / added during the day">Receipt</th>
+                <th scope="col" rowspan="2" class="num calc-h" title="Total = Opening Stock + Receipt">Total <span class="auto">auto</span></th>
+                <th scope="col" rowspan="2" class="num" title="Stock Balance counted at end of day">Stock Balance</th>
+                <th scope="col" rowspan="2" class="num calc-h" title="Stock Sold = Total - Stock Balance">Stock Sold <span class="auto">auto</span></th>
+                <th scope="col" rowspan="2" class="num th-price" title="Unit selling price in Ghana Cedis">
+                  <div class="th-stack">
+                    <span>Price</span>
+                    <span class="unit">GH₵</span>
+                  </div>
+                </th>
+                <th scope="colgroup" colspan="2" class="num amt-super sticky-amt-super">Amount</th>
+                <th scope="col" rowspan="2" class="c-del sticky-del" title="Edit or delete item"><span class="sr-only">Actions</span></th>
+              </tr>
+              <tr class="sub-head">
+                <th scope="col" class="num amt-sub amt-ghc-h sticky-amt-ghc">GH₵</th>
+                <th scope="col" class="num amt-sub amt-ghp-h sticky-amt-ghp">GHp</th>
+              </tr>
+            </thead>
+            <tbody id="sheet-body"></tbody>
+            <tfoot>
+              <tr>
+                <td class="sticky-no"></td>
+                <td class="sticky-item tf-label">Daily Total</td>
+                <td colspan="6"></td>
+                <td class="num tf-total amt-ghc sticky-amt-ghc" id="tf-ghc">0</td>
+                <td class="num tf-total amt-ghp sticky-amt-ghp" id="tf-ghp">00</td>
+                <td class="c-del sticky-del"></td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+        <p class="sheet-msg" id="sheet-msg" role="alert" aria-live="assertive"></p>
+      </div>
+
+      <div class="total-bar hidden" id="total-bar">
+        <div class="tb-stats">
+          <div><span class="tb-k">Items</span><span class="tb-v" id="tb-items">0</span></div>
+          <div class="tb-saved" id="tb-saved"><span class="saved-dot"></span>Saved</div>
+        </div>
+        <div class="tb-total">
+          <span class="tb-k">Daily Total</span>
+          <span class="tb-money"><span class="cur">GH₵</span><span id="tb-total">0.00</span></span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ ALL DAYS ============ -->
+    <section id="view-all" class="view hidden" aria-labelledby="all-title">
+      <div class="all-head">
+        <div>
+          <h2 id="all-title" class="view-title">All Stock — Every Day</h2>
+          <p class="muted" id="all-summary"></p>
+        </div>
+        <div class="all-tools">
+          <label class="jump">
+            <span class="sr-only">Jump to date</span>
+            <input type="date" id="jump-date" />
+          </label>
+          <button type="button" class="btn ghost" id="jump-go">Jump to Date</button>
+          <button type="button" class="btn primary" id="back-today">Back to Today</button>
+        </div>
+      </div>
+      <div class="all-export">
+        <button type="button" class="btn subtle" id="all-export-csv">Export all to Excel</button>
+        <button type="button" class="btn subtle" id="all-print">Print / Save all as PDF</button>
+      </div>
+      <div id="all-list" class="all-list"></div>
+      <div id="all-sentinel" class="sentinel" aria-hidden="true"></div>
+    </section>
+
+    <!-- ============ SETTINGS ============ -->
+    <section id="view-settings" class="view hidden" aria-labelledby="settings-title">
+      <h2 id="settings-title" class="view-title">Settings</h2>
+      <div class="settings-grid">
+        <article class="card s-card">
+          <h3>Store</h3>
+          <label class="field">Store name
+            <input id="set-store-name" type="text" autocomplete="off" />
+          </label>
+          <label class="field">Currency
+            <input id="set-currency" type="text" value="Ghana Cedi (GH₵)" disabled />
+          </label>
+          <button type="button" class="btn primary" id="save-store">Save</button>
+        </article>
+
+        <article class="card s-card">
+          <h3>Security</h3>
+          <p class="muted" id="pin-status">No PIN set. Anyone with this device can edit stock.</p>
+          <div class="btn-row" id="pin-actions"></div>
+        </article>
+
+        <article class="card s-card">
+          <h3>Export &amp; Backup</h3>
+          <div class="btn-col">
+            <button type="button" class="btn ghost" id="exp-csv-day">Export this day's sheet to Excel</button>
+            <button type="button" class="btn ghost" id="exp-csv-all">Export all days to Excel</button>
+            <button type="button" class="btn ghost" id="exp-pdf-day">Print / Save this day as PDF</button>
+            <button type="button" class="btn ghost" id="exp-pdf-all">Print / Save all days as PDF</button>
+          </div>
+          <hr class="sep" />
+          <p class="muted" id="backup-status">No backup downloaded yet.</p>
+          <div class="btn-row">
+            <button type="button" class="btn gold" id="backup-download">Download backup</button>
+            <label class="btn ghost file-btn" for="backup-file">Restore backup</label>
+            <input type="file" id="backup-file" accept="application/json,.json" class="sr-only" />
+          </div>
+        </article>
+
+        <article class="card s-card s-wide">
+          <h3>Cloud Sync <span class="muted small">(optional: share stock across phones and computers)</span></h3>
+          <p class="muted" id="cloud-status">Off. Data is kept on this device only.</p>
+          <div class="form-2">
+            <label class="field">Supabase project URL
+              <input id="cloud-url" type="url" placeholder="https://xxxx.supabase.co" autocomplete="off" />
+            </label>
+            <label class="field">Supabase anon (public) key
+              <input id="cloud-key" type="password" placeholder="eyJhbGciOi…" autocomplete="off" />
+            </label>
+          </div>
+          <div class="btn-row">
+            <button type="button" class="btn primary" id="cloud-connect">Connect &amp; Sync</button>
+            <button type="button" class="btn ghost" id="cloud-sync-now">Sync now</button>
+            <button type="button" class="btn danger-ghost" id="cloud-disconnect">Disconnect</button>
+          </div>
+          <details class="howto">
+            <summary>How to set up the cloud database (one time)</summary>
+            <ol>
+              <li>Create a free project at <a href="https://supabase.com" target="_blank"
+                  rel="noopener">supabase.com</a>.</li>
+              <li>Open <b>SQL Editor</b>, paste the SQL below and press <b>Run</b>.</li>
+              <li>Open <b>Project Settings → API</b>, copy the <b>Project URL</b> and the <b>anon public</b> key into
+                the boxes above.</li>
+              <li>Enter the same URL and key on every phone or computer that should share the stock.</li>
+            </ol>
+            <div class="code-wrap">
+              <button type="button" class="btn subtle copy-btn" id="copy-sql">Copy SQL</button>
+              <pre id="sql-setup"><code>create table if not exists public.stock_docs (
+  id text primary key,
+  data jsonb not null,
+  updated_at timestamptz not null default now()
+);
+
+create or replace function public.stock_docs_touch()
+returns trigger language plpgsql as $$
+begin
+  new.updated_at = now();
+  return new;
+end; $$;
+
+drop trigger if exists stock_docs_touch on public.stock_docs;
+create trigger stock_docs_touch
+  before insert or update on public.stock_docs
+  for each row execute function public.stock_docs_touch();
+
+create index if not exists stock_docs_updated_idx
+  on public.stock_docs (updated_at);
+
+alter table public.stock_docs enable row level security;
+
+drop policy if exists "shop devices" on public.stock_docs;
+create policy "shop devices" on public.stock_docs
+  for all using (true) with check (true);</code></pre>
+            </div>
+            <p class="muted small">Keep the key private to the shop. Anyone who has both the URL and the key can read
+              and change the stock.</p>
+          </details>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <datalist id="item-list"></datalist>
+  <div id="modal-root"></div>
+  <div id="toast-root" class="toast-root" aria-live="polite"></div>
+  <div id="print-root" class="print-root" aria-hidden="true"></div>
+
+  <script type="module" src="js/app.js?v=6.8"></script>
+</body>
+
+</html>

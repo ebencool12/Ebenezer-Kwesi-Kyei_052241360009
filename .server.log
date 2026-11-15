@@ -1,0 +1,93 @@
+================================================================
+  FD ABRANTE3 SPOT 2 — Device Database Server
+================================================================
+  • Local Device:    http://localhost:4173/
+  • Shop Wi-Fi / IP: http://127.0.0.1:4173/
+  • SQLite Database: /Users/owususarpong/Desktop/ABRANTE3 SPOT 2/data/stock.db
+================================================================
+  Server is running. Press Ctrl+C to stop.
+================================================================
+::1 - - [15/Nov/2026 08:46:52] "GET / HTTP/1.1" 304 -
+::1 - - [15/Nov/2026 08:46:53] "GET /manifest.webmanifest HTTP/1.1" 304 -
+::1 - - [15/Nov/2026 08:46:53] "GET /css/styles.css?v=6.8 HTTP/1.1" 304 -
+::1 - - [15/Nov/2026 08:46:53] "GET /icons/icon-192.png HTTP/1.1" 304 -
+::1 - - [15/Nov/2026 08:46:53] "GET /js/app.js?v=6.8 HTTP/1.1" 304 -
+::1 - - [15/Nov/2026 08:46:54] "GET /js/state.js?v=6.6 HTTP/1.1" 304 -
+::1 - - [15/Nov/2026 08:46:54] "GET /js/sync.js?v=6.6 HTTP/1.1" 304 -
+::1 - - [15/Nov/2026 08:46:54] "GET /js/util.js?v=6.6 HTTP/1.1" 304 -
+::1 - - [15/Nov/2026 08:46:54] "GET /js/export.js?v=6.6 HTTP/1.1" 304 -
+::1 - - [15/Nov/2026 08:46:54] "GET /js/ui.js?v=6.6 HTTP/1.1" 304 -
+::1 - - [15/Nov/2026 08:46:54] "GET /js/db.js HTTP/1.1" 200 -
+::1 - - [15/Nov/2026 08:46:54] "GET /js/util.js HTTP/1.1" 200 -
+::1 - - [15/Nov/2026 08:46:54] "GET /js/state.js HTTP/1.1" 200 -
+::1 - - [15/Nov/2026 08:46:54] "GET /api/status HTTP/1.1" 200 -
+::1 - - [15/Nov/2026 08:46:54] "GET /api/docs HTTP/1.1" 200 -
+::1 - - [15/Nov/2026 08:46:55] "GET /sw.js HTTP/1.1" 200 -
+::1 - - [15/Nov/2026 08:47:09] "GET /api/status HTTP/1.1" 200 -
+::1 - - [15/Nov/2026 08:47:17] "GET /api/status HTTP/1.1" 200 -
+::1 - - [15/Nov/2026 08:47:24] "GET /api/status HTTP/1.1" 200 -
+::1 - - [15/Nov/2026 08:47:39] "GET /api/status HTTP/1.1" 200 -
+::1 - - [15/Nov/2026 08:47:54] "GET /api/status HTTP/1.1" 200 -
+::1 - - [15/Nov/2026 08:48:07] "POST /api/docs HTTP/1.1" 200 -
+::1 - - [15/Nov/2026 08:48:09] "GET /api/status HTTP/1.1" 200 -
+::1 - - [15/Nov/2026 08:48:15] "GET /api/status HTTP/1.1" 200 -
+::1 - - [15/Nov/2026 08:48:24] "GET /api/status HTTP/1.1" 200 -
+::1 - - [15/Nov/2026 08:48:39] "GET /api/status HTTP/1.1" 200 -
+::1 - - [15/Nov/2026 08:48:54] "GET /api/status HTTP/1.1" 200 -
+::1 - - [15/Nov/2026 08:49:16] "GET /api/status HTTP/1.1" 200 -
+::1 - - [15/Nov/2026 08:49:36] "GET /api/status HTTP/1.1" 200 -
+::1 - - [15/Nov/2026 08:49:53] "GET /api/status HTTP/1.1" 200 -
+::1 - - [15/Nov/2026 08:49:53] "GET /api/status HTTP/1.1" 200 -
+::1 - - [15/Nov/2026 08:50:08] "GET /api/status HTTP/1.1" 200 -
+::1 - - [15/Nov/2026 08:50:23] "GET /api/status HTTP/1.1" 200 -
+::1 - - [15/Nov/2026 08:50:38] "GET /api/status HTTP/1.1" 200 -
+::1 - - [15/Nov/2026 08:50:53] "GET /api/status HTTP/1.1" 200 -
+::1 - - [15/Nov/2026 08:51:09] "GET /api/status HTTP/1.1" 200 -
+::1 - - [15/Nov/2026 08:51:25] "GET /api/status HTTP/1.1" 200 -
+::1 - - [15/Nov/2026 08:51:41] "GET /api/status HTTP/1.1" 200 -
+::1 - - [15/Nov/2026 08:52:05] "GET /api/status HTTP/1.1" 200 -
+::1 - - [15/Nov/2026 08:52:41] "GET /api/status HTTP/1.1" 200 -
+::1 - - [15/Nov/2026 08:53:02] "GET /api/status HTTP/1.1" 200 -
+::1 - - [15/Nov/2026 08:54:02] "GET /api/status HTTP/1.1" 200 -
+::1 - - [15/Nov/2026 08:55:02] "GET /api/status HTTP/1.1" 200 -
+::1 - - [15/Nov/2026 08:56:02] "GET /api/status HTTP/1.1" 200 -
+::1 - - [15/Nov/2026 08:57:02] "GET /api/status HTTP/1.1" 200 -
+::1 - - [15/Nov/2026 08:58:02] "GET /api/status HTTP/1.1" 200 -
+::1 - - [15/Nov/2026 08:59:16] "GET /api/status HTTP/1.1" 200 -
+::1 - - [15/Nov/2026 09:00:34] "GET /api/status HTTP/1.1" 200 -
+::1 - - [15/Nov/2026 09:01:46] "GET /api/status HTTP/1.1" 200 -
+::1 - - [15/Nov/2026 09:03:16] "GET /api/status HTTP/1.1" 200 -
+::1 - - [15/Nov/2026 09:04:30] "GET /api/status HTTP/1.1" 200 -
+::1 - - [15/Nov/2026 09:05:02] "GET /api/status HTTP/1.1" 200 -
+::1 - - [15/Nov/2026 09:06:02] "GET /api/status HTTP/1.1" 200 -
+::1 - - [15/Nov/2026 09:07:02] "GET /api/status HTTP/1.1" 200 -
+::1 - - [15/Nov/2026 09:07:47] "GET /api/status HTTP/1.1" 200 -
+::1 - - [15/Nov/2026 09:07:47] "GET /api/status HTTP/1.1" 200 -
+::1 - - [15/Nov/2026 09:08:11] "GET /api/status HTTP/1.1" 200 -
+::1 - - [15/Nov/2026 09:08:28] "GET /api/status HTTP/1.1" 200 -
+::1 - - [15/Nov/2026 09:08:46] "GET /api/status HTTP/1.1" 200 -
+::1 - - [15/Nov/2026 09:09:03] "GET /api/status HTTP/1.1" 200 -
+::1 - - [15/Nov/2026 09:09:15] "GET /api/status HTTP/1.1" 200 -
+::1 - - [15/Nov/2026 09:09:18] "GET /api/status HTTP/1.1" 200 -
+::1 - - [15/Nov/2026 09:09:33] "GET /api/status HTTP/1.1" 200 -
+::1 - - [15/Nov/2026 09:09:48] "GET /api/status HTTP/1.1" 200 -
+::1 - - [15/Nov/2026 09:10:03] "GET /api/status HTTP/1.1" 200 -
+::1 - - [15/Nov/2026 09:10:19] "GET /api/status HTTP/1.1" 200 -
+::1 - - [15/Nov/2026 09:10:20] "GET /api/status HTTP/1.1" 200 -
+::1 - - [15/Nov/2026 09:10:20] "GET /api/status HTTP/1.1" 200 -
+::1 - - [15/Nov/2026 09:10:33] "GET /api/status HTTP/1.1" 200 -
+::1 - - [15/Nov/2026 09:11:17] "GET /api/status HTTP/1.1" 200 -
+::1 - - [15/Nov/2026 09:12:12] "GET /api/status HTTP/1.1" 200 -
+::1 - - [15/Nov/2026 09:12:39] "GET /api/status HTTP/1.1" 200 -
+::1 - - [15/Nov/2026 09:14:45] "GET /api/status HTTP/1.1" 200 -
+::1 - - [15/Nov/2026 09:15:06] "GET /api/status HTTP/1.1" 200 -
+::1 - - [15/Nov/2026 09:16:26] "GET /api/status HTTP/1.1" 200 -
+::1 - - [15/Nov/2026 09:16:28] "GET /api/status HTTP/1.1" 200 -
+::1 - - [15/Nov/2026 09:16:41] "GET /api/status HTTP/1.1" 200 -
+::1 - - [15/Nov/2026 09:16:56] "GET /api/status HTTP/1.1" 200 -
+::1 - - [15/Nov/2026 09:17:12] "GET /api/status HTTP/1.1" 200 -
+::1 - - [15/Nov/2026 09:18:49] "GET /api/status HTTP/1.1" 200 -
+::1 - - [15/Nov/2026 09:19:06] "GET /api/status HTTP/1.1" 200 -
+::1 - - [15/Nov/2026 09:19:46] "GET /api/status HTTP/1.1" 200 -
+::1 - - [15/Nov/2026 09:19:46] "GET /api/status HTTP/1.1" 200 -
+::1 - - [15/Nov/2026 09:20:01] "GET /api/status HTTP/1.1" 200 -

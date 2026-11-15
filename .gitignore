@@ -1,0 +1,7 @@
+node_modules/
+__pycache__/
+*.pyc
+.server.log
+.server.pid
+scratch/
+data/stock.db
