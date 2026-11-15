@@ -700,6 +700,11 @@ main {
   border-radius: var(--radius);
   border: 1px solid var(--border);
   background: rgba(0, 0, 0, 0.22);
+  /* Scroll-shadow hint: right edge glow when content overflows */
+  background-image:
+    linear-gradient(to right, rgba(0,0,0,0.22) 30%, transparent),
+    linear-gradient(to left,  rgba(7,220,118,0.10) 0%, transparent 80%);
+  background-attachment: local, scroll;
 }
 
 .stock-table {
@@ -1422,6 +1427,13 @@ td.amt-ghp {
 .day .table-wrap {
   max-height: none;
   min-height: 0;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  /* Scroll-shadow hint matching main table */
+  background-image:
+    linear-gradient(to right, rgba(0,0,0,0.22) 30%, transparent),
+    linear-gradient(to left,  rgba(7,220,118,0.10) 0%, transparent 80%);
+  background-attachment: local, scroll;
 }
 
 .day .stock-table {
@@ -1961,6 +1973,66 @@ td.amt-ghp {
   }
 }
 
+/* On narrow screens the right sticky columns (Amount + Actions) collide with
+   the left sticky columns (No. + Item). Un-stick them so they scroll normally,
+   and show a persistent thin scroll-hint track on the table wrapper. */
+@media (max-width: 1050px) {
+  .sticky-del,
+  .sticky-amt-ghp,
+  .sticky-amt-ghc,
+  thead th.sticky-del,
+  thead th.sticky-amt-super,
+  thead tr.sub-head th.sticky-amt-ghc,
+  thead tr.sub-head th.sticky-amt-ghp,
+  tfoot .sticky-del,
+  tfoot .sticky-amt-ghp,
+  tfoot .sticky-amt-ghc {
+    position: static;
+  }
+
+  /* Show a thin persistent scrollbar on the table so users know it scrolls */
+  .table-wrap {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(52, 211, 153, 0.4) transparent;
+  }
+
+  .table-wrap::-webkit-scrollbar {
+    display: block;
+    height: 5px;
+  }
+
+  .table-wrap::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.04);
+    border-radius: 999px;
+  }
+
+  .table-wrap::-webkit-scrollbar-thumb {
+    background: rgba(52, 211, 153, 0.4);
+    border-radius: 999px;
+  }
+
+  /* All Days view: same treatment for read-only tables */
+  .day .table-wrap {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(52, 211, 153, 0.4) transparent;
+  }
+
+  .day .table-wrap::-webkit-scrollbar {
+    display: block;
+    height: 5px;
+  }
+
+  .day .table-wrap::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.04);
+    border-radius: 999px;
+  }
+
+  .day .table-wrap::-webkit-scrollbar-thumb {
+    background: rgba(52, 211, 153, 0.4);
+    border-radius: 999px;
+  }
+}
+
 @media (max-width: 640px) {
   :root {
     --topbar-h: 60px;
@@ -1999,11 +2071,22 @@ td.amt-ghp {
   }
 
   .toolbar {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    gap: 8px;
+    padding: 8px 10px;
+    /* hide scrollbar on toolbar itself */
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .toolbar::-webkit-scrollbar {
+    display: none;
   }
 
   .toolbar .btn {
+    flex: 0 0 auto;
     padding: 0 10px;
     font-size: 0.9rem;
   }
