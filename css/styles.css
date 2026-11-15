@@ -894,7 +894,8 @@ td.calc.money {
   color: var(--gold);
 }
 
-td.calc.flash {
+td.calc.flash,
+.cell-input.flash {
   animation: flash 0.5s var(--ease);
 }
 
@@ -1333,6 +1334,7 @@ td.amt-ghp {
 }
 
 .day {
+  min-width: 0;
   padding: 16px;
   scroll-margin-top: calc(var(--topbar-h) + 16px);
   animation: viewIn 0.4s var(--ease) both;

@@ -213,8 +213,19 @@ function onNumberInput(tr, activeField) {
       vals.balance = round3(total - vals.sold);
       const balEl = tr.querySelector('[data-field="balance"]');
       if (balEl && document.activeElement !== balEl) balEl.value = numStr(vals.balance);
+    } else if (activeField === 'receipt') {
+      // When receipt is entered, it adds to stock available and reflects directly in Total and Stock Balance
+      const currentSold = Math.max(0, vals.sold || 0);
+      vals.balance = round3(total - currentSold);
+      vals.sold = currentSold;
+      const balEl = tr.querySelector('[data-field="balance"]');
+      if (balEl && document.activeElement !== balEl) {
+        balEl.value = numStr(vals.balance);
+        balEl.classList.remove('invalid');
+        balEl.classList.remove('flash'); void balEl.offsetWidth; balEl.classList.add('flash');
+      }
     } else {
-      // Otherwise (user typed opening, receipt, or balance), recalculate sold
+      // Otherwise (user typed opening or balance), recalculate sold
       vals.sold = round3(total - vals.balance);
       const sldEl = tr.querySelector('[data-field="sold"]');
       if (sldEl && document.activeElement !== sldEl) sldEl.value = numStr(vals.sold);
@@ -417,6 +428,12 @@ function openEditItem(tr) {
       bal = round3(total - sP.value);
       balEl.value = numStr(bal);
       sld = sP.value;
+    } else if (changedField === 'receipt') {
+      const currentSold = Math.max(0, sP.ok ? sP.value : 0);
+      bal = round3(total - currentSold);
+      balEl.value = numStr(bal);
+      sld = currentSold;
+      balEl.classList.remove('invalid');
     } else {
       if (!bP.ok) { errEl.textContent = `Stock balance: ${bP.error}`; return; }
       sld = round3(total - bP.value);
@@ -607,11 +624,12 @@ function openAddItem() {
     </label>
     <div class="two">
       <label class="field">Opening stock<input id="add-opening" inputmode="decimal" placeholder="0"></label>
-      <label class="field">Price (${CURRENCY})<input id="add-price" inputmode="decimal" placeholder="0.00"></label>
+      <label class="field">Receipt (stock added today)<input id="add-receipt" inputmode="decimal" placeholder="0"></label>
     </div>
+    <label class="field">Price (${CURRENCY})<input id="add-price" inputmode="decimal" placeholder="0.00"></label>
     <p class="hint muted" id="add-hint">Pick from the list or type a new item.</p>
     <p class="form-error" id="add-error"></p>`;
-  const nameEl = $('#add-name', form), openEl = $('#add-opening', form), priceEl = $('#add-price', form);
+  const nameEl = $('#add-name', form), openEl = $('#add-opening', form), rcptEl = $('#add-receipt', form), priceEl = $('#add-price', form);
   const hint = $('#add-hint', form), errEl = $('#add-error', form);
   let priceTouched = false;
   nameEl.addEventListener('input', () => {
@@ -623,16 +641,19 @@ function openAddItem() {
   });
   priceEl.addEventListener('input', () => { priceTouched = true; errEl.textContent = ''; });
   openEl.addEventListener('input', () => (errEl.textContent = ''));
+  rcptEl.addEventListener('input', () => (errEl.textContent = ''));
 
   const submit = (close, keepOpen) => {
     const name = nameEl.value.trim().replace(/\s+/g, ' ');
-    const o = parseAmount(openEl.value), p = parseAmount(priceEl.value);
+    const o = parseAmount(openEl.value), rc = parseAmount(rcptEl.value), p = parseAmount(priceEl.value);
     if (!name) { errEl.textContent = 'Item name is required.'; return nameEl.focus(); }
     if (sheet.rows.some((r) => r.name.toLowerCase() === name.toLowerCase())) { errEl.textContent = `"${name}" is already on this sheet.`; return nameEl.focus(); }
     if (!o.ok) { errEl.textContent = `Opening stock: ${o.error}.`; return openEl.focus(); }
+    if (!rc.ok) { errEl.textContent = `Receipt: ${rc.error}.`; return rcptEl.focus(); }
     if (!p.ok) { errEl.textContent = `Price: ${p.error}.`; return priceEl.focus(); }
+    const total = round3(o.value + rc.value);
     const it = ensureItem(name, p.value);
-    sheet.rows.push({ id: uid(), itemId: it.id, name: it.name, opening: o.value, receipt: 0, balance: o.value, sold: 0, price: p.value });
+    sheet.rows.push({ id: uid(), itemId: it.id, name: it.name, opening: o.value, receipt: rc.value, balance: total, sold: 0, price: p.value });
     saveSheet(sheet);
     refreshDatalist();
     renderSheet();
